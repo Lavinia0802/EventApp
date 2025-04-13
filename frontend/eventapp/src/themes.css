@@ -1,0 +1,332 @@
+/* Additional theme overrides for specific component types */
+
+/* Ensure all backgrounds respect the theme */
+.dark-theme body,
+[data-theme="dark"] body {
+  background-color: var(--background-color);
+}
+
+/* Force proper text coloring for all standard elements */
+.dark-theme h1,
+.dark-theme h2,
+.dark-theme h3,
+.dark-theme h4,
+.dark-theme h5,
+.dark-theme h6,
+.dark-theme p,
+.dark-theme span,
+.dark-theme div,
+.dark-theme label,
+.dark-theme li,
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6,
+[data-theme="dark"] p,
+[data-theme="dark"] span,
+[data-theme="dark"] div,
+[data-theme="dark"] label,
+[data-theme="dark"] li {
+  color: var(--text-color);
+}
+
+/* Common Bootstrap elements */
+.dark-theme .badge,
+[data-theme="dark"] .badge {
+  border-color: var(--input-border);
+}
+
+/* Form elements */
+.dark-theme .input-group-text,
+[data-theme="dark"] .input-group-text {
+  background-color: var(--card-bg);
+  border-color: var(--input-border);
+  color: var(--text-color);
+}
+
+.dark-theme select option,
+[data-theme="dark"] select option {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+}
+
+/* Force inputs to keep dark appearance */
+.dark-theme input:-webkit-autofill,
+.dark-theme input:-webkit-autofill:hover,
+.dark-theme input:-webkit-autofill:focus,
+.dark-theme input:-webkit-autofill:active,
+[data-theme="dark"] input:-webkit-autofill,
+[data-theme="dark"] input:-webkit-autofill:hover,
+[data-theme="dark"] input:-webkit-autofill:focus,
+[data-theme="dark"] input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px var(--input-bg) inset !important;
+  -webkit-text-fill-color: var(--text-color) !important;
+}
+
+/* Custom scrollbar for dark theme */
+.dark-theme ::-webkit-scrollbar,
+[data-theme="dark"] ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.dark-theme ::-webkit-scrollbar-track,
+[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: var(--card-bg);
+}
+
+.dark-theme ::-webkit-scrollbar-thumb,
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background-color: var(--input-border);
+  border-radius: 4px;
+}
+
+/* Ensure modals have proper z-index and backdrop */
+.dark-theme .modal-backdrop,
+[data-theme="dark"] .modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Specific components that might need additional styling */
+.dark-theme .accordion,
+[data-theme="dark"] .accordion,
+.dark-theme .accordion-item,
+[data-theme="dark"] .accordion-item,
+.dark-theme .accordion-header,
+[data-theme="dark"] .accordion-header,
+.dark-theme .accordion-button,
+[data-theme="dark"] .accordion-button {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border-color: var(--input-border);
+}
+
+.dark-theme .accordion-button:not(.collapsed),
+[data-theme="dark"] .accordion-button:not(.collapsed) {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* QR code displays need white background to remain scannable */
+.dark-theme .qrcode svg,
+[data-theme="dark"] .qrcode svg {
+  background-color: white;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+/* Override styles for navbar and footer in dark mode */
+.dark-theme .navbar,
+[data-theme="dark"] .navbar {
+  background-color: var(--navbar-bg) !important;
+}
+
+.dark-theme .navbar-nav .nav-link,
+[data-theme="dark"] .navbar-nav .nav-link,
+.dark-theme .navbar-brand,
+[data-theme="dark"] .navbar-brand {
+  color: var(--navbar-color) !important;
+}
+
+.dark-theme footer,
+[data-theme="dark"] footer {
+  background-color: var(--footer-bg) !important;
+  color: var(--footer-color) !important;
+}
+
+/* Comprehensive dropzone styling for react-dropzone */
+.dropzone,
+[role="presentation"],
+.dz-clickable {
+  background-color: var(--dropzone-bg) !important;
+  border-color: var(--dropzone-border) !important;
+  color: var(--dropzone-text) !important;
+  border-width: 2px !important;
+  border-style: dashed !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  font-size: 1rem !important;
+}
+
+.dropzone:hover,
+[role="presentation"]:hover,
+.dz-clickable:hover {
+  border-color: var(--link-color) !important;
+  background-color: rgba(var(--bs-primary-rgb), 0.05) !important;
+}
+
+/* Dark mode specific overrides */
+.dark-theme .dropzone,
+[data-theme="dark"] .dropzone,
+.dark-theme [role="presentation"],
+[data-theme="dark"] [role="presentation"],
+.dark-theme .dz-clickable,
+[data-theme="dark"] .dz-clickable {
+  background-color: var(--dropzone-bg) !important;
+  border-color: var(--dropzone-border) !important;
+  color: var(--dropzone-text) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Dark mode hover effect */
+.dark-theme .dropzone:hover,
+[data-theme="dark"] .dropzone:hover,
+.dark-theme [role="presentation"]:hover,
+[data-theme="dark"] [role="presentation"]:hover,
+.dark-theme .dz-clickable:hover,
+[data-theme="dark"] .dz-clickable:hover {
+  background-color: rgba(21, 64, 134, 0.15) !important;
+  border-color: var(--link-color) !important;
+}
+
+/* For react-dropzone styling */
+.dz-message,
+.dz-preview,
+.dark-theme .dz-message,
+[data-theme="dark"] .dz-message,
+.dark-theme .dz-preview,
+[data-theme="dark"] .dz-preview {
+  color: var(--dropzone-text) !important;
+  font-size: 1rem !important;
+}
+
+/* Add more prominence to dropzone text */
+[role="presentation"] p,
+.dark-theme [role="presentation"] p,
+[data-theme="dark"] [role="presentation"] p {
+  color: var(--dropzone-text) !important;
+  font-weight: 500 !important;
+  font-size: 1rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+/* Make icons more visible in dropzones */
+.dark-theme [role="presentation"] i,
+[data-theme="dark"] [role="presentation"] i,
+.dark-theme [role="presentation"] svg,
+[data-theme="dark"] [role="presentation"] svg,
+[role="presentation"] i,
+[role="presentation"] svg {
+  color: var(--dropzone-border) !important;
+  fill: var(--dropzone-border) !important;
+  font-size: 1.5rem !important;
+}
+
+/* Style specific parts of the dropzone */
+.dark-theme .dz-progress,
+[data-theme="dark"] .dz-progress {
+  background-color: var(--card-bg) !important;
+}
+
+.dark-theme .dz-progress .dz-upload,
+[data-theme="dark"] .dz-progress .dz-upload {
+  background-color: var(--btn-primary-bg) !important;
+}
+
+/* For components that might use hardcoded white backgrounds */
+.dark-theme [style*="background-color: white"],
+[data-theme="dark"] [style*="background-color: white"],
+.dark-theme [style*="background-color: #fff"],
+[data-theme="dark"] [style*="background-color: #fff"],
+.dark-theme [style*="background-color: #ffffff"],
+[data-theme="dark"] [style*="background-color: #ffffff"] {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
+}
+
+/* Alert styling for dark mode */
+.dark-theme .alert,
+[data-theme="dark"] .alert {
+  color: var(--text-color) !important;
+}
+
+.dark-theme .alert-success,
+[data-theme="dark"] .alert-success {
+  background-color: var(--alert-success-bg) !important;
+  color: var(--alert-success-text) !important;
+  border-color: var(--alert-success-border) !important;
+}
+
+.dark-theme .alert-warning,
+[data-theme="dark"] .alert-warning {
+  background-color: var(--alert-warning-bg) !important;
+  color: var(--alert-warning-text) !important;
+  border-color: var(--alert-warning-border) !important;
+}
+
+.dark-theme .alert-danger,
+[data-theme="dark"] .alert-danger {
+  background-color: var(--alert-danger-bg) !important;
+  color: var(--alert-danger-text) !important;
+  border-color: var(--alert-danger-border) !important;
+}
+
+.dark-theme .alert-info,
+[data-theme="dark"] .alert-info {
+  background-color: var(--alert-info-bg) !important;
+  color: var(--alert-info-text) !important;
+  border-color: var(--alert-info-border) !important;
+}
+
+/* Success and error message backgrounds */
+.dark-theme .bg-success,
+[data-theme="dark"] .bg-success,
+.dark-theme .text-bg-success,
+[data-theme="dark"] .text-bg-success {
+  background-color: var(--alert-success-bg) !important;
+  color: var(--alert-success-text) !important;
+}
+
+.dark-theme .bg-warning,
+[data-theme="dark"] .bg-warning,
+.dark-theme .text-bg-warning,
+[data-theme="dark"] .text-bg-warning {
+  background-color: var(--alert-warning-bg) !important;
+  color: var(--alert-warning-text) !important;
+}
+
+.dark-theme .bg-danger,
+[data-theme="dark"] .bg-danger,
+.dark-theme .text-bg-danger,
+[data-theme="dark"] .text-bg-danger {
+  background-color: var(--alert-danger-bg) !important;
+  color: var(--alert-danger-text) !important;
+}
+
+.dark-theme .bg-info,
+[data-theme="dark"] .bg-info,
+.dark-theme .text-bg-info,
+[data-theme="dark"] .text-bg-info {
+  background-color: var(--alert-info-bg) !important;
+  color: var(--alert-info-text) !important;
+}
+
+/* Toast notifications */
+.dark-theme .toast-success,
+[data-theme="dark"] .toast-success {
+  background-color: var(--alert-success-bg) !important;
+  color: var(--alert-success-text) !important;
+  border-color: var(--alert-success-border) !important;
+}
+
+.dark-theme .toast-warning,
+[data-theme="dark"] .toast-warning {
+  background-color: var(--alert-warning-bg) !important;
+  color: var(--alert-warning-text) !important;
+  border-color: var(--alert-warning-border) !important;
+}
+
+.dark-theme .toast-error,
+[data-theme="dark"] .toast-error {
+  background-color: var(--alert-danger-bg) !important;
+  color: var(--alert-danger-text) !important;
+  border-color: var(--alert-danger-border) !important;
+}
+
+.dark-theme .toast-info,
+[data-theme="dark"] .toast-info {
+  background-color: var(--alert-info-bg) !important;
+  color: var(--alert-info-text) !important;
+  border-color: var(--alert-info-border) !important;
+}

@@ -36,3 +36,239 @@
     transform: rotate(360deg);
   }
 }
+
+/* Theme-aware styling */
+[data-theme="dark"] .bg-light,
+.dark-theme .bg-light {
+  background-color: var(--card-bg) !important;
+}
+
+[data-theme="dark"] .bg-white,
+.dark-theme .bg-white {
+  background-color: var(--card-bg) !important;
+}
+
+/* Text Colors */
+[data-theme="dark"] .text-dark,
+.dark-theme .text-dark {
+  color: var(--text-color) !important;
+}
+
+[data-theme="dark"] .text-secondary,
+.dark-theme .text-secondary {
+  color: var(--text-muted) !important;
+}
+
+[data-theme="dark"] .text-black,
+.dark-theme .text-black {
+  color: var(--text-color) !important;
+}
+
+[data-theme="dark"] .text-white,
+.dark-theme .text-white {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .border,
+.dark-theme .border {
+  border-color: var(--input-border) !important;
+}
+
+/* Custom transitions for theme toggle */
+body,
+.card,
+.navbar,
+.form-control,
+.btn,
+.table,
+.modal,
+.dropdown-menu {
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+/* Theme-aware modal styles */
+[data-theme="dark"] .modal-content,
+.dark-theme .modal-content {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border-color: var(--input-border);
+}
+
+/* Theme-aware dropdown styles */
+[data-theme="dark"] .dropdown-menu,
+.dark-theme .dropdown-menu {
+  background-color: var(--card-bg);
+  border-color: var(--input-border);
+}
+
+[data-theme="dark"] .dropdown-item,
+.dark-theme .dropdown-item {
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .dropdown-item:hover,
+.dark-theme .dropdown-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Toasts and Alerts */
+[data-theme="dark"] .toast,
+.dark-theme .toast,
+[data-theme="dark"] .alert,
+.dark-theme .alert {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border-color: var(--input-border);
+}
+
+/* Bootstrap containers and rows */
+[data-theme="dark"] .container,
+.dark-theme .container,
+[data-theme="dark"] .container-fluid,
+.dark-theme .container-fluid,
+[data-theme="dark"] .row,
+.dark-theme .row {
+  background-color: transparent;
+}
+
+/* Pagination */
+[data-theme="dark"] .pagination .page-item .page-link,
+.dark-theme .pagination .page-item .page-link {
+  background-color: var(--card-bg);
+  border-color: var(--input-border);
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .pagination .page-item.active .page-link,
+.dark-theme .pagination .page-item.active .page-link {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+/* Badges */
+[data-theme="dark"] .badge,
+.dark-theme .badge {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+}
+
+/* React Dropzone styling */
+.dropzone-container {
+  padding: 20px;
+  border-width: 2px;
+  border-radius: 5px;
+  border-style: dashed;
+  background-color: var(--dropzone-bg);
+  border-color: var(--dropzone-border);
+  color: var(--dropzone-text);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+}
+
+.dropzone-container p {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.dropzone-container:hover {
+  border-color: var(--link-color);
+  background-color: rgba(var(--bs-primary-rgb), 0.05);
+}
+
+[data-theme="dark"] .dropzone-container,
+.dark-theme .dropzone-container {
+  background-color: var(--dropzone-bg);
+  border-color: var(--dropzone-border);
+  color: var(--dropzone-text);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  font-size: 1rem;
+}
+
+[data-theme="dark"] .dropzone-container:hover,
+.dark-theme .dropzone-container:hover {
+  border-color: var(--link-color);
+  background-color: rgba(21, 64, 134, 0.15);
+}
+
+/* Add an icon to make dropzone more visible */
+.dropzone-container::before {
+  content: "\F484";
+  font-family: "bootstrap-icons";
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 8px;
+  color: var(--dropzone-border);
+}
+
+/* Custom styling for Upload button */
+.upload-btn {
+  background-color: var(--btn-primary-bg);
+  border-color: var(--btn-primary-border);
+}
+
+[data-theme="dark"] .upload-btn,
+.dark-theme .upload-btn {
+  background-color: var(--btn-primary-bg);
+  border-color: var(--btn-primary-border);
+}
+
+/* Upload status messages */
+.upload-success,
+.success-message,
+.upload-complete {
+  background-color: var(--alert-success-bg);
+  color: var(--alert-success-text);
+  border-color: var(--alert-success-border);
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin: 10px 0;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.upload-error,
+.error-message,
+.upload-failed {
+  background-color: var(--alert-danger-bg);
+  color: var(--alert-danger-text);
+  border-color: var(--alert-danger-border);
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin: 10px 0;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.upload-warning,
+.warning-message {
+  background-color: var(--alert-warning-bg);
+  color: var(--alert-warning-text);
+  border-color: var(--alert-warning-border);
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin: 10px 0;
+  border-width: 1px;
+  border-style: solid;
+}
+
+/* Make dropzone error/success indicators more visible */
+[data-theme="dark"] .dz-error-message,
+.dark-theme .dz-error-message {
+  background-color: var(--alert-danger-bg) !important;
+  color: var(--alert-danger-text) !important;
+}
+
+[data-theme="dark"] .dz-success-mark,
+.dark-theme .dz-success-mark {
+  color: var(--alert-success-text) !important;
+}
+
+[data-theme="dark"] .dz-error-mark,
+.dark-theme .dz-error-mark {
+  color: var(--alert-danger-text) !important;
+}

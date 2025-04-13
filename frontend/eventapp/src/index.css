@@ -1,13 +1,208 @@
+/* Theme Variables */
+:root {
+  --primary-color: #0d6efd;
+  --secondary-color: #6c757d;
+  --success-color: #198754;
+  --info-color: #0dcaf0;
+  --warning-color: #ffc107;
+  --danger-color: #dc3545;
+  --light-color: #f8f9fa;
+  --dark-color: #212529;
+
+  /* Light Theme (default) */
+  --background-color: #ffffff;
+  --text-color: #212529;
+  --text-muted: #6c757d;
+  --card-bg: #f8f9fa;
+  --input-bg: #ffffff;
+  --input-border: #ced4da;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --navbar-bg: #343a40;
+  --navbar-color: #ffffff;
+  --footer-bg: #343a40;
+  --footer-color: #ffffff;
+  --link-color: #0d6efd;
+  --link-hover-color: #0a58ca;
+  --btn-primary-bg: #0d6efd;
+  --btn-primary-border: #0a58ca;
+  --dropzone-bg: #f8f9fa;
+  --dropzone-border: #0d6efd;
+  --dropzone-text: #212529;
+  --alert-success-bg: #d1e7dd;
+  --alert-success-text: #0f5132;
+  --alert-success-border: #badbcc;
+  --alert-warning-bg: #fff3cd;
+  --alert-warning-text: #664d03;
+  --alert-warning-border: #ffecb5;
+  --alert-danger-bg: #f8d7da;
+  --alert-danger-text: #842029;
+  --alert-danger-border: #f5c2c7;
+  --alert-info-bg: #cff4fc;
+  --alert-info-text: #055160;
+  --alert-info-border: #b6effb;
+}
+
+/* Dark Theme */
+[data-theme="dark"],
+.dark-theme {
+  --background-color: #121212;
+  --text-color: #e9ecef;
+  --text-muted: #adb5bd;
+  --card-bg: #2d3238;
+  --input-bg: #2d3238;
+  --input-border: #495057;
+  --shadow-color: rgba(255, 255, 255, 0.05);
+  --navbar-bg: #1a1d20;
+  --navbar-color: #e9ecef;
+  --footer-bg: #1a1d20;
+  --footer-color: #e9ecef;
+  --link-color: #5a91e7;
+  --link-hover-color: #83adee;
+  --btn-primary-bg: #154086;
+  --btn-primary-border: #0d2c5d;
+  --dropzone-bg: #1e2228;
+  --dropzone-border: #5a91e7;
+  --dropzone-text: #e9ecef;
+  --alert-success-bg: #133a29;
+  --alert-success-text: #8de3b0;
+  --alert-success-border: #0f5132;
+  --alert-warning-bg: #332701;
+  --alert-warning-text: #ffda6a;
+  --alert-warning-border: #664d03;
+  --alert-danger-bg: #2c0b0e;
+  --alert-danger-text: #ea868f;
+  --alert-danger-border: #842029;
+  --alert-info-bg: #032830;
+  --alert-info-text: #6edff6;
+  --alert-info-border: #055160;
+
+  /* Override Bootstrap colors */
+  --bs-body-bg: #121212;
+  --bs-body-color: #e9ecef;
+  --bs-light-rgb: 40, 44, 52;
+  --bs-dark-rgb: 248, 249, 250;
+  --bs-primary-rgb: 21, 64, 134;
+  --bs-primary: #154086;
+  --bs-success-rgb: 19, 58, 41;
+  --bs-warning-rgb: 51, 39, 1;
+  --bs-danger-rgb: 44, 11, 14;
+  --bs-info-rgb: 3, 40, 48;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Links */
+a {
+  color: var(--link-color);
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--link-hover-color);
+}
+
+/* Text colors */
+[data-theme="dark"] .text-dark,
+.dark-theme .text-dark {
+  color: var(--text-color) !important;
+}
+
+[data-theme="dark"] .text-muted,
+.dark-theme .text-muted {
+  color: var(--text-muted) !important;
+}
+
+/* Fix for the hello user text in navbar */
+.navbar-text,
+[data-theme="dark"] .navbar-text,
+.dark-theme .navbar-text {
+  color: var(--navbar-color) !important;
+}
+
+/* Navbar */
+.navbar-dark {
+  background-color: var(--navbar-bg) !important;
+  color: var(--navbar-color) !important;
+}
+
+/* Footer */
+footer.bg-dark {
+  background-color: var(--footer-bg) !important;
+  color: var(--footer-color) !important;
+}
+
+/* Dark mode card overrides */
+[data-theme="dark"] .card,
+.dark-theme .card {
+  background-color: var(--card-bg);
+  border-color: var(--input-border);
+  color: var(--text-color);
+}
+
+/* Bootstrap component overrides */
+[data-theme="dark"] .btn-light,
+.dark-theme .btn-light {
+  background-color: var(--card-bg);
+  border-color: var(--input-border);
+  color: var(--text-color);
+}
+
+/* Override primary button colors */
+[data-theme="dark"] .btn-primary,
+.dark-theme .btn-primary {
+  background-color: var(--btn-primary-bg) !important;
+  border-color: var(--btn-primary-border) !important;
+}
+
+/* Dropzone styling */
+[data-theme="dark"] .dropzone,
+.dark-theme .dropzone {
+  background-color: var(--dropzone-bg) !important;
+  border-color: var(--dropzone-border) !important;
+  color: var(--dropzone-text) !important;
+}
+
+[data-theme="dark"] .list-group-item,
+.dark-theme .list-group-item {
+  background-color: var(--card-bg);
+  border-color: var(--input-border);
+  color: var(--text-color);
+}
+
+/* Dark mode form elements */
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .form-select,
+.dark-theme .form-control,
+.dark-theme .form-select {
+  background-color: var(--input-bg);
+  border-color: var(--input-border);
+  color: var(--text-color);
+}
+
+/* Dark mode tables */
+[data-theme="dark"] .table,
+.dark-theme .table {
+  color: var(--text-color);
+  border-color: var(--input-border);
+}
+
+[data-theme="dark"] .table-striped > tbody > tr:nth-of-type(odd) > *,
+.dark-theme .table-striped > tbody > tr:nth-of-type(odd) > * {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Keep code elements consistent */
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
