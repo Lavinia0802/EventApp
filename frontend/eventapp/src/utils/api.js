@@ -8,6 +8,12 @@ const api = axios.create({
   },
 });
 
+// Initialize token from localStorage if available
+const storedToken = localStorage.getItem("auth_token");
+if (storedToken) {
+  api.defaults.headers.common["Authorization"] = `Bearer ${storedToken}`;
+}
+
 // Add JWT token to requests if available
 export const setAuthToken = (token) => {
   if (token) {

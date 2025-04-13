@@ -16,7 +16,15 @@ export const AuthProvider = ({ children }) => {
     isLoading,
   } = useAuth0();
 
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState(() => {
+    // Try to get token from localStorage on initial load
+    const savedToken = localStorage.getItem("auth_token");
+    if (savedToken) {
+      setAuthToken(savedToken);
+      return savedToken;
+    }
+    return null;
+  });
 
   // Set auth token when authentication state changes
   useEffect(() => {
@@ -26,8 +34,12 @@ export const AuthProvider = ({ children }) => {
           const token = await getAccessTokenSilently();
           setAuthToken(token);
           setToken(token);
+          // Store token in localStorage
+          localStorage.setItem("auth_token", token);
         } else {
           setToken(null);
+          // Clear token from localStorage
+          localStorage.removeItem("auth_token");
         }
       } catch (error) {
         console.error("Error getting authentication token:", error);
@@ -42,7 +54,11 @@ export const AuthProvider = ({ children }) => {
     isAuthenticated,
     user,
     login: loginWithRedirect,
-    logout: () => logout({ returnTo: window.location.origin }),
+    logout: () => {
+      // Clear token from localStorage before logout
+      localStorage.removeItem("auth_token");
+      logout({ returnTo: window.location.origin });
+    },
     isLoading,
     token,
   };

@@ -1,18 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { eventsApi } from "../utils/api";
+import { useAuth } from "../contexts/AuthContext";
+import { useTheme } from "../contexts/ThemeContext";
 
 const EventsList = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { isLoading: authLoading } = useAuth();
+  const { theme } = useTheme();
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [eventToDelete, setEventToDelete] = useState(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await eventsApi.getAll();
-        setEvents(response.data);
-        setLoading(false);
+        // Only fetch events when auth is ready
+        if (!authLoading) {
+          const response = await eventsApi.getAll();
+          setEvents(response.data);
+          setLoading(false);
+        }
       } catch (err) {
         setError("Failed to load events. Please try again later.");
         setLoading(false);
@@ -21,9 +31,37 @@ const EventsList = () => {
     };
 
     fetchEvents();
-  }, []);
+  }, [authLoading]);
 
-  if (loading) {
+  const handleDeleteClick = (event) => {
+    setEventToDelete(event);
+    setShowDeleteModal(true);
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteModal(false);
+    setEventToDelete(null);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!eventToDelete) return;
+
+    setDeleteLoading(true);
+    try {
+      await eventsApi.delete(eventToDelete._id);
+      setEvents(events.filter((event) => event._id !== eventToDelete._id));
+      setShowDeleteModal(false);
+      setEventToDelete(null);
+    } catch (err) {
+      console.error("Error deleting event:", err);
+      setError("Failed to delete event. Please try again.");
+    } finally {
+      setDeleteLoading(false);
+    }
+  };
+
+  // Show loading while either component or authentication is loading
+  if (loading || authLoading) {
     return (
       <div className="d-flex justify-content-center p-5">
         <div className="spinner-border" role="status">
@@ -81,24 +119,104 @@ const EventsList = () => {
                     </small>
                   </p>
                 </div>
-                <div className="card-footer bg-transparent d-flex justify-content-between">
-                  <Link
-                    to={`/events/${event._id}`}
-                    className="btn btn-outline-primary"
-                  >
-                    View Details
-                  </Link>
-                  <Link
-                    to={`/events/${event._id}/qr`}
-                    className="btn btn-outline-success"
-                  >
-                    QR Code
-                  </Link>
+                <div className="card-footer bg-transparent">
+                  <div className="d-flex justify-content-between mb-2">
+                    <Link
+                      to={`/events/${event._id}`}
+                      className="btn btn-outline-primary"
+                    >
+                      View Details
+                    </Link>
+                    <Link
+                      to={`/events/${event._id}/qr`}
+                      className="btn btn-outline-success"
+                    >
+                      QR Code
+                    </Link>
+                  </div>
+                  <div className="d-flex justify-content-between">
+                    <Link
+                      to={`/events/${event._id}/edit`}
+                      className="btn btn-outline-secondary w-100 me-1"
+                    >
+                      <i className="bi bi-pencil-square me-1"></i> Edit
+                    </Link>
+                    <button
+                      onClick={() => handleDeleteClick(event)}
+                      className="btn btn-outline-danger w-100 ms-1"
+                    >
+                      <i className="bi bi-trash me-1"></i> Delete
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           ))}
         </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && (
+        <>
+          <div
+            className="modal show d-block"
+            tabIndex="-1"
+            style={{ pointerEvents: "auto" }}
+          >
+            <div className="modal-dialog modal-dialog-centered">
+              <div
+                className={`modal-content ${
+                  theme === "dark" ? "bg-dark text-light" : ""
+                }`}
+              >
+                <div className="modal-header">
+                  <h5 className="modal-title">Confirm Delete</h5>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    onClick={handleCancelDelete}
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div className="modal-body">
+                  <p>
+                    Are you sure you want to delete the event "
+                    {eventToDelete?.title}"? This action cannot be undone.
+                  </p>
+                </div>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={handleCancelDelete}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-danger"
+                    onClick={handleConfirmDelete}
+                    disabled={deleteLoading}
+                  >
+                    {deleteLoading ? (
+                      <>
+                        <span
+                          className="spinner-border spinner-border-sm me-2"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>
+                        Deleting...
+                      </>
+                    ) : (
+                      "Delete Event"
+                    )}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="modal-backdrop show"></div>
+        </>
       )}
     </div>
   );

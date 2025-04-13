@@ -67,16 +67,16 @@ const Navbar = () => {
                 Upload Photos
               </Link>
             </li>
-          </ul>
+          </ul>{" "}
           <div className="d-flex align-items-center">
             {isAuthenticated ? (
-              <div className="d-flex flex-column flex-lg-row align-items-center">
+              <div className="d-flex flex-column flex-lg-row align-items-center text-center w-100">
                 <span className="navbar-text text-light mb-2 mb-lg-0 me-lg-3">
                   Hello, {user?.name || user?.email}
                 </span>
                 <button
                   onClick={logout}
-                  className="btn btn-outline-light w-100 w-lg-auto me-2"
+                  className="btn btn-outline-light mx-auto mx-lg-0 me-lg-2"
                 >
                   Logout
                 </button>

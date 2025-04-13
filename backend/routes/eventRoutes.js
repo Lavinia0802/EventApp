@@ -108,7 +108,7 @@ router.put("/:id", checkJwt, async (req, res) => {
 router.delete("/:id", checkJwt, async (req, res) => {
   try {
     const userId = req.auth.payload.sub;
-    const event = await Event.findOne({
+    const event = await Event.findOneAndDelete({
       _id: req.params.id,
       createdBy: userId,
     });
@@ -119,7 +119,6 @@ router.delete("/:id", checkJwt, async (req, res) => {
         .json({ message: "Event not found or unauthorized" });
     }
 
-    await event.remove();
     res.json({ message: "Event deleted" });
   } catch (error) {
     res.status(500).json({ message: error.message });

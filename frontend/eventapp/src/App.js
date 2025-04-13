@@ -7,6 +7,7 @@ import { auth0Config } from "./utils/auth0-config";
 import Home from "./pages/Home";
 import EventsList from "./pages/EventsList";
 import CreateEvent from "./pages/CreateEvent";
+import EditEvent from "./pages/EditEvent";
 import EventQRCode from "./pages/EventQRCode";
 import PhotoUpload from "./pages/PhotoUpload";
 import EventDetails from "./pages/EventDetails";
@@ -61,6 +62,14 @@ const AppContent = () => {
               element={
                 <ProtectedRoute>
                   <EventDetails />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/events/:id/edit"
+              element={
+                <ProtectedRoute>
+                  <EditEvent />
                 </ProtectedRoute>
               }
             />

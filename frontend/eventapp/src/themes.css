@@ -32,6 +32,20 @@
   color: var(--text-color);
 }
 
+/* Card styling in dark mode */
+.dark-theme .card-body,
+[data-theme="dark"] .card-body {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
+}
+
+/* Bootstrap bg-dark class should use our theme color instead of default */
+.dark-theme .bg-dark,
+[data-theme="dark"] .bg-dark {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
+}
+
 /* Common Bootstrap elements */
 .dark-theme .badge,
 [data-theme="dark"] .badge {
@@ -306,7 +320,7 @@
 .dark-theme .toast-success,
 [data-theme="dark"] .toast-success {
   background-color: var(--alert-success-bg) !important;
-  color: var(--alert-success-text) !important;
+  color: var (--alert-success-text) !important;
   border-color: var(--alert-success-border) !important;
 }
 
