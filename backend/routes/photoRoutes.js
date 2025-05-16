@@ -3,15 +3,9 @@ import fileUpload from "express-fileupload";
 import Photo from "../models/Photo.js";
 import Event from "../models/Event.js";
 import path from "path";
-import fs from "fs";
-import { fileURLToPath } from "url";
 import FileType from "file-type";
 
 const router = express.Router();
-
-// Get directory path for ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 // Helper function to validate image files
 const validateImageFile = async (file) => {
@@ -95,11 +89,6 @@ router.post("/upload/:qrCode", async (req, res) => {
     if (!event) {
       return res.status(404).json({ message: "Event not found" });
     }
-
-    const photoName = `${Date.now()}_${uploadedPhoto.name.replace(
-      /\s+/g,
-      "_"
-    )}`;
 
     // Store photo in MongoDB as Base64
     const photoData = uploadedPhoto.data.toString("base64");

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useLocation, Link } from "react-router-dom";
 import { eventsApi } from "../utils/api";
 import { QRCodeCanvas } from "qrcode.react";

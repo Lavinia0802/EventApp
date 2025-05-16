@@ -14,7 +14,6 @@ const photoSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  // For MongoDB storage option
   imageData: {
     type: String, // Base64 encoded image data
   },

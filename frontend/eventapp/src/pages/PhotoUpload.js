@@ -1,17 +1,16 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { Html5QrcodeScanner } from "html5-qrcode";
 import { useDropzone } from "react-dropzone";
 import { eventsApi, photosApi } from "../utils/api";
 import { useAuth } from "../contexts/AuthContext";
+import { useTheme } from "../contexts/ThemeContext";
+import QrCodeScanner from "../components/QrCodeScanner";
 
 const PhotoUpload = () => {
   const { qrCode } = useParams();
   const fileInputRef = useRef(null);
-  const scannerRef = useRef(null);
-  const qrScannerContainerRef = useRef(null);
-  const scannerInitializedRef = useRef(false); // Track if scanner has been initialized
   const { isAuthenticated, user } = useAuth();
+  const { theme } = useTheme();
 
   const [uploadStep, setUploadStep] = useState(qrCode ? "upload" : "scan");
   const [scannedCode, setScannedCode] = useState(qrCode || "");
@@ -25,7 +24,6 @@ const PhotoUpload = () => {
   const [userData, setUserData] = useState("");
   const [userDataError, setUserDataError] = useState("");
   const [fileErrors, setFileErrors] = useState([]);
-
   useEffect(() => {
     // If user is authenticated, use their name
     if (isAuthenticated && user) {
@@ -33,147 +31,21 @@ const PhotoUpload = () => {
     }
   }, [isAuthenticated, user]);
 
-  // Cleanup function for scanner - wrapped in useCallback to prevent recreating on every render
-  const cleanupScanner = useCallback(() => {
-    if (scannerRef.current) {
-      try {
-        scannerRef.current.clear();
-        scannerRef.current = null;
-        scannerInitializedRef.current = false; // Reset initialization flag
+  // Define scan success handler
+  const handleScanSuccess = (decodedText) => {
+    const qrCodeRegex = /\/upload\/([^/]+)$/;
+    const match = decodedText.match(qrCodeRegex);
 
-        // Also remove all qr-reader elements from the DOM
-        document.querySelectorAll("#qr-reader").forEach((el) => {
-          if (el && el.parentNode) {
-            el.parentNode.removeChild(el);
-          }
-        });
-      } catch (error) {
-        console.error("Failed to clear scanner", error);
-      }
+    if (match && match[1]) {
+      setScannedCode(match[1]);
+      setUploadStep("upload");
+    } else {
+      setError("Invalid QR code format. Please scan a valid event QR code.");
     }
-  }, []);
-
-  // Define scan callbacks before using them in useEffect
-  const onScanSuccess = useCallback(
-    (decodedText) => {
-      // Immediately clean up scanner on success to prevent duplicate scans
-      const qrCodeRegex = /\/upload\/([^/]+)$/;
-      const match = decodedText.match(qrCodeRegex);
-
-      if (match && match[1]) {
-        cleanupScanner(); // Clean up scanner before state change
-        setScannedCode(match[1]);
-        setUploadStep("upload");
-      } else {
-        setError("Invalid QR code format. Please scan a valid event QR code.");
-      }
-    },
-    [cleanupScanner]
-  );
-
-  const onScanFailure = useCallback((error) => {
-    console.warn(`QR scan error: ${error}`);
-  }, []);
-
-  useEffect(() => {
-    // Initialize scanner only in scan step, when not already initialized
-    if (
-      uploadStep === "scan" &&
-      !scannerInitializedRef.current &&
-      qrScannerContainerRef.current
-    ) {
-      // Make sure we're not duplicating
-      cleanupScanner();
-
-      // First, make sure the container is empty
-      const container = qrScannerContainerRef.current;
-      while (container.firstChild) {
-        container.removeChild(container.firstChild);
-      }
-
-      // Create the qr-reader element programmatically with a unique ID to avoid conflicts
-      const uniqueId = "qr-reader-" + Date.now();
-      const qrReaderElement = document.createElement("div");
-      qrReaderElement.id = uniqueId;
-      container.appendChild(qrReaderElement);
-
-      // Wait briefly to ensure DOM is updated
-      setTimeout(() => {
-        // Skip if component has unmounted or changed state
-        if (uploadStep !== "scan" || !qrScannerContainerRef.current) return;
-
-        // Verify the element exists
-        const qrElement = document.getElementById(uniqueId);
-        if (!qrElement) {
-          console.error("QR reader element not found in DOM");
-          return;
-        }
-
-        try {
-          // Create the scanner using the unique ID
-          scannerRef.current = new Html5QrcodeScanner(
-            uniqueId,
-            { fps: 10, qrbox: 250 },
-            false
-          );
-
-          // Set flag before rendering to prevent duplicate initializations
-          scannerInitializedRef.current = true;
-
-          // Render the scanner
-          scannerRef.current.render(onScanSuccess, onScanFailure);
-
-          // Style the scanner buttons to match app styling after rendering
-          setTimeout(() => {
-            // Find and update the camera permission button
-            const cameraPermissionButton = document.getElementById(
-              `html5-qrcode-button-camera-permission`
-            );
-            if (cameraPermissionButton) {
-              cameraPermissionButton.className = "btn btn-light";
-              // Add camera icon
-              if (!cameraPermissionButton.innerHTML.includes("bi-camera")) {
-                cameraPermissionButton.innerHTML =
-                  '<i class="bi bi-camera me-2"></i>' +
-                  cameraPermissionButton.innerHTML;
-              }
-            }
-
-            // Find and update the file selection button
-            const fileSelectionButton = document.getElementById(
-              `html5-qrcode-button-file-selection`
-            );
-            if (fileSelectionButton) {
-              fileSelectionButton.className = "btn btn-light ms-2";
-              // Add image icon
-              if (!fileSelectionButton.innerHTML.includes("bi-image")) {
-                fileSelectionButton.innerHTML =
-                  '<i class="bi bi-image me-2"></i>' +
-                  fileSelectionButton.innerHTML;
-              }
-            }
-          }, 500); // Small delay to ensure the scanner has rendered
-        } catch (err) {
-          console.error("Error initializing QR scanner:", err);
-          setError(
-            "Could not initialize camera. Please check camera permissions."
-          );
-        }
-      }, 100);
-    }
-
-    // Clean up function
-    return () => {
-      if (uploadStep !== "scan") {
-        cleanupScanner();
-      }
-    };
-  }, [uploadStep, cleanupScanner, onScanSuccess, onScanFailure]);
-
-  // Always cleanup scanner when component unmounts
-  useEffect(() => {
-    return cleanupScanner;
-  }, [cleanupScanner]);
+  };
+  const handleScanError = (errorMessage) => {
+    setError(errorMessage);
+  };
 
   useEffect(() => {
     if (scannedCode) {
@@ -384,19 +256,17 @@ const PhotoUpload = () => {
                   <div className="alert alert-danger" role="alert">
                     {error}
                   </div>
-                )}
+                )}{" "}
                 <p className="card-text mb-4">
                   Position the event QR code in front of your camera to upload
                   photos.
                 </p>
                 <div className="mb-4">
-                  <div
-                    ref={qrScannerContainerRef}
-                    className="mx-auto"
-                    style={{ maxWidth: "500px", overflow: "hidden" }}
-                  >
-                    {/* QR reader will be created dynamically here */}
-                  </div>
+                  <QrCodeScanner
+                    onScanSuccess={handleScanSuccess}
+                    onError={handleScanError}
+                    theme={theme}
+                  />
                 </div>
               </div>
             </div>
@@ -450,7 +320,6 @@ const PhotoUpload = () => {
                       Location: {event.location || "No location specified"}
                     </p>
                   </div>
-
                   <form onSubmit={handleSubmit}>
                     <div className="mb-3">
                       <label htmlFor="userData" className="form-label">
@@ -593,8 +462,10 @@ const PhotoUpload = () => {
                         </div>
                       </>
                     )}
-                  </form>
+                  </form>{" "}
                 </>
+              ) : error ? (
+                <></>
               ) : (
                 <div className="text-center p-4">
                   <div className="spinner-border" role="status">
