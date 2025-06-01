@@ -1,70 +1,189 @@
-# Getting Started with Create React App
+# Event Gallery Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern React web application for managing events and photo sharing with QR code integration. This frontend provides an intuitive user interface for creating events, generating QR codes, and allowing guests to upload photos without requiring accounts.
 
-## Available Scripts
+## 🚀 Features
 
-In the project directory, you can run:
+- **Event Management**: Create, edit, view, and delete events
+- **QR Code Generation**: Automatic QR code generation for easy guest access
+- **Photo Upload**: Drag-and-drop photo upload with support for multiple files
+- **QR Code Scanner**: Built-in scanner for reading event QR codes
+- **Authentication**: Secure Auth0 integration for event creators
+- **Dark/Light Theme**: Toggle between dark and light themes with system preference detection
+- **Responsive Design**: Mobile-first responsive design using Bootstrap 5
+- **Guest Access**: Photo upload without requiring guest authentication
 
-### `npm start`
+## 🛠️ Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Framework**: React 19.1.0
+- **Routing**: React Router DOM 7.5.0
+- **Authentication**: Auth0 React SDK
+- **UI Framework**: Bootstrap 5.3.5 with Bootstrap Icons
+- **HTTP Client**: Axios for API communication
+- **QR Code**: qrcode.react for generation, html5-qrcode for scanning
+- **File Upload**: React Dropzone for drag-and-drop functionality
+- **Build Tool**: Create React App with CRACO for configuration
+- **State Management**: React Context API for theme and authentication
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## ⚙️ Environment Configuration
 
-### `npm test`
+Create a `.env` file in the frontend root directory:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```env
+# Auth0 Configuration
+REACT_APP_AUTH0_DOMAIN=your-auth0-domain.auth0.com
+REACT_APP_AUTH0_CLIENT_ID=your-auth0-client-id
+REACT_APP_AUTH0_AUDIENCE=your-api-identifier
 
-### `npm run build`
+# API Configuration
+REACT_APP_API_BASE_URL=http://localhost:3001
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🚀 Getting Started
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Prerequisites
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Node.js (v14 or higher)
+- npm or yarn package manager
+- Backend API running (see backend README)
 
-### `npm run eject`
+### Installation
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. **Navigate to the frontend directory**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   ```bash
+   cd EventApp/frontend/eventapp
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+2. **Install dependencies**
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   ```bash
+   npm install
+   ```
 
-## Learn More
+3. **Set up environment variables**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   - Create a `.env` file in the frontend root
+   - Configure Auth0 and API settings
+   - Update `src/utils/auth0-config.js` with your Auth0 settings
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+4. **Start the development server**
+   ```bash
+   npm start
+   ```
 
-### Code Splitting
+The application will start on `http://localhost:3000`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 🔧 Available Scripts
 
-### Analyzing the Bundle Size
+- **`npm start`**: Runs the app in development mode
+- **`npm build`**: Builds the app for production
+- **`npm test`**: Launches the test runner
+- **`npm run eject`**: Ejects from Create React App (one-way operation)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 🎨 Theme System
 
-### Making a Progressive Web App
+The application features a comprehensive theming system with:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Theme Features
 
-### Advanced Configuration
+- **Auto-detection**: System preference detection on first visit
+- **Persistence**: Theme choice saved in localStorage
+- **Dynamic switching**: Toggle between light and dark modes
+- **Bootstrap integration**: Full Bootstrap component theming
+- **CSS Variables**: Centralized color management
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Theme Toggle
 
-### Deployment
+Users can switch themes via:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- Navbar toggle button (sun/moon icon)
+- Automatic system preference detection
+- Persistent user preference storage
 
-### `npm run build` fails to minify
+## 🔐 Authentication
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Auth0 Integration
+
+- **Single Sign-On**: Secure authentication via Auth0
+- **Protected Routes**: Route-level authentication guards
+- **User Profile**: Access to user information and preferences
+
+### Route Protection
+
+- **Public Routes**: Home, Photo Upload (via QR code)
+- **Protected Routes**: Event management, QR code generation
+- **Automatic Redirect**: Unauthenticated users redirected to home
+
+## 📱 Key Features
+
+### Event Management
+
+- **Create Events**: Form-based event creation with validation
+- **Edit Events**: In-place editing of event details
+- **Delete Events**: Confirmation-based event deletion
+- **Event Dashboard**: Overview of all user events
+
+### QR Code Integration
+
+- **Generation**: Automatic unique QR code for each event
+- **Display**: Downloadable QR code images
+- **Scanning**: Built-in camera-based QR scanner
+- **Guest Access**: Direct photo upload via QR code
+
+### Photo Upload
+
+- **Drag & Drop**: Intuitive file upload interface
+- **Multiple Files**: Batch upload support
+- **Progress Indication**: Upload progress feedback
+- **File Validation**: Type and size validation
+- **Guest Friendly**: No authentication required for uploads
+
+## 🎯 User Experience
+
+### Navigation
+
+- **Responsive Navbar**: Mobile-friendly navigation
+- **Theme Toggle**: Accessible theme switching
+- **Authentication Status**: Clear login/logout indicators
+- **Breadcrumb Navigation**: Clear page hierarchy
+
+### Responsive Design
+
+- **Mobile-First**: Optimized for mobile devices
+- **Bootstrap Grid**: Responsive layout system
+- **Touch Friendly**: Large touch targets
+- **Cross-Browser**: Modern browser compatibility
+
+## 🔧 Configuration
+
+### CRACO Configuration
+
+The project uses CRACO to customize Create React App:
+
+```javascript
+// craco.config.js
+module.exports = {
+  webpack: {
+    configure: (webpackConfig) => {
+      // Custom webpack configuration
+      // Excludes html5-qrcode from source maps
+      return webpackConfig;
+    },
+  },
+};
+```
+
+### API Configuration
+
+API communication is centralized in `src/utils/api.js`:
+
+```javascript
+// Base API configuration
+const API_BASE_URL =
+  process.env.REACT_APP_API_BASE_URL || "http://localhost:3001";
+
+// Automatic token injection
+// Request/response interceptors
+// Error handling
+```
